@@ -21,7 +21,7 @@
 	var newComputerGuess = null;
 	var userGuesses = [];
 
-//computer selects a random letter
+//computer selects a random letter...and a new letter after each game
 	var computerGuess = options[Math.floor(Math.random()*options.length)];
 	console.log(computerGuess);
 
@@ -30,20 +30,22 @@
  		console.log(newComputerGuess);
 	};
 
-//user guesses a letter
+//user guesses a letter and their guesses are displayed in a list
 	document.onkeyup = function() {
 		var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
+		userGuesses.push(" " + userGuess);
 		console.log(userGuess); 
 
-//reset guesses after user wins
-	var resetGuesses = function() {
+//reset # of guesses and list of guesses after user wins or loses
+	var reset = function() {
 		guesses = 10;
+		userGuesses = [];
 	};
 
 //compare user guess to computer's selection and trigger stat changes
 	if (userGuess == computerGuess || userGuess == newComputerGuess) {
 		wins++;
-		resetGuesses();
+		reset();
 		updateComputerGuess();
 		alert("You must be psychic! Let's see if you can do it again...");
 	 } else {
@@ -52,7 +54,7 @@
 
   	if (guesses < 1) {
   		losses++;
-  		resetGuesses();
+  		reset();
   		updateComputerGuess();
   		alert("Your psychic ability is a little rusty... Better luck next time!");
   	}
@@ -61,11 +63,10 @@
   	var html = "<h1>Guess what letter I'm thinking of..." + 
 		"<p>Wins: " + wins + "</p>" + 
 		"<p>Losses: " + losses + "</p>" +
-		"<p>Guesses Left: " + guesses + "</p>";
+		"<p>Guesses Left: " + guesses + "</p>" +
 		"<p>Your Guesses: " + userGuesses + "</p>";
 
 	document.querySelector('#game').innerHTML = html; 
-
   	};
 
 	</script>
